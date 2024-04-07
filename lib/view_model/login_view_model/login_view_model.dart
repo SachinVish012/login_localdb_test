@@ -19,7 +19,7 @@ class LoginController extends GetxController {
 
     if (loggedIn) {
       print("LogedIn");
-      Get.offAllNamed(RoutesName.user_dataView);
+      Get.offAllNamed(RoutesName.user_dataView, arguments: emailText);
     } else {
       Get.defaultDialog(
         title: 'Login Failed',

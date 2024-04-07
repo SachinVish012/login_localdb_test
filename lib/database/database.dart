@@ -44,4 +44,27 @@ class DatabaseHelper {
     );
     return result.isNotEmpty;
   }
+  Future<User?> getUserByEmail(String email) async {
+    final db = await database;
+    final List<Map<String, dynamic>> result = await db.query(
+      'users',
+      where: 'email = ?',
+      whereArgs: [email],
+    );
+    if (result.isNotEmpty) {
+      return User.fromMap(result.first);
+    } else {
+      return null;
+    }
+  }
+
+  Future<void> editUserDetailsByMobile(String mobile, String newName, String newEmail) async {
+    final db = await database;
+    await db.update(
+      'users',
+      {'name': newName, 'email': newEmail},
+      where: 'phoneNumber = ?',
+      whereArgs: [mobile],
+    );
+  }
 }
