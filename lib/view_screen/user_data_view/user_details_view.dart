@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:login_localdb_test/res/routes/routes_name.dart';
 import '../../database/database.dart';
 import '../../model/user_model.dart';
 
@@ -14,11 +15,12 @@ class UserDetailsView extends StatefulWidget {
 class _UserDetailsViewState extends State<UserDetailsView> {
   late Future<User?> _userFuture;
   final dbHelper = DatabaseHelper();
+  late final email;
 
   @override
   void initState() {
     super.initState();
-    final email = Get.arguments;
+    email = Get.arguments;
     print(email.toString());
     _userFuture = dbHelper.getUserByEmail(email.toString());
   }
@@ -28,10 +30,21 @@ class _UserDetailsViewState extends State<UserDetailsView> {
     return Scaffold(
       appBar: AppBar(
         title: Text('User Details'),
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: 20),
+              child: IconButton(
+                icon: Icon(Icons.edit),
+                color: Colors.blue,
+                onPressed: (){
+                  Get.toNamed(RoutesName.user_dataEdit,arguments:email);
+                },
+              )
+          )],
       ),
       body: Center(
         child: Container(
-          height: MediaQuery.of(context).size.height/3.6,
+          height: MediaQuery.of(context).size.height / 3.6,
           width: double.infinity,
           child: Card(
             margin: EdgeInsets.all(16.0),
@@ -63,6 +76,11 @@ class _UserDetailsViewState extends State<UserDetailsView> {
                             SizedBox(height: 8.0),
                             Text(
                               'Email: ${user.email}',
+                              style: TextStyle(fontSize: 18.0),
+                            ),
+                            SizedBox(height: 8.0),
+                            Text(
+                              'Password: ${user.password}',
                               style: TextStyle(fontSize: 18.0),
                             ),
                           ],

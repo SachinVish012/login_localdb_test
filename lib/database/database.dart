@@ -26,6 +26,7 @@ class DatabaseHelper {
     );
   }
 
+  //---insert data
   Future<void> insertUser(User user) async {
     final db = await database;
     await db.insert(
@@ -35,6 +36,7 @@ class DatabaseHelper {
     );
   }
 
+  //----user login
   Future<bool> loginUser(String email, String password) async {
     final db = await database;
     final List<Map<String, dynamic>> result = await db.query(
@@ -44,6 +46,8 @@ class DatabaseHelper {
     );
     return result.isNotEmpty;
   }
+
+  //--get data by email
   Future<User?> getUserByEmail(String email) async {
     final db = await database;
     final List<Map<String, dynamic>> result = await db.query(
@@ -58,11 +62,12 @@ class DatabaseHelper {
     }
   }
 
-  Future<void> editUserDetailsByMobile(String mobile, String newName, String newEmail) async {
+  //---forupdate--details
+  Future<void> editUserDetailsByMobile(String mobile, String newName, String newEmail, String newPassword) async {
     final db = await database;
     await db.update(
       'users',
-      {'name': newName, 'email': newEmail},
+      {'name': newName, 'email': newEmail, 'password': newPassword},
       where: 'phoneNumber = ?',
       whereArgs: [mobile],
     );
