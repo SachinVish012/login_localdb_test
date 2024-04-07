@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login_localdb_test/res/routes/routes_name.dart';
+import 'package:login_localdb_test/view_screen/login_view_screen/login_widget/login_email_widget.dart';
 
 import '../../view_model/login_view_model/login_view_model.dart';
+import 'login_widget/login_password_widget.dart';
 
 class LoginViewScreen extends StatefulWidget {
   const LoginViewScreen({Key? key}) : super(key: key);
@@ -37,27 +39,9 @@ class _LoginViewScreenState extends State<LoginViewScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                TextFormField(
-                  controller: _loginController.email,
-                  decoration: InputDecoration(labelText: 'Email'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _loginController.password,
-                  decoration: InputDecoration(labelText: 'Password'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    return null;
-                  },
-                  obscureText: true,
-                ),
+                LoginEmailWidget(loginController: _loginController),
+                LoginPassword(loginController: _loginController),
+
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: ElevatedButton(

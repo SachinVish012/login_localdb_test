@@ -9,13 +9,14 @@ class SignupController extends GetxController {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController mobileeController = TextEditingController();
+
 
   void signUp() async {
     final name = nameController.text;
     final email = emailController.text;
     final password = passwordController.text;
-    final phone = phoneController.text;
+    final phone = mobileeController.text;
 
     User newUser = User(
       name: name,
@@ -23,7 +24,7 @@ class SignupController extends GetxController {
       password: password,
       phoneNumber: phone,
     );
-
+print(newUser.password.toString()+newUser.name.toString()+newUser.phoneNumber.toString()+newUser.email.toString());
     await DatabaseHelper().insertUser(newUser).then((value) {
       print("-------------");
       Get.offAllNamed(RoutesName.login_screen);
@@ -35,7 +36,7 @@ class SignupController extends GetxController {
     nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
-    phoneController.dispose();
+    mobileeController.dispose();
     super.onClose();
   }
 }

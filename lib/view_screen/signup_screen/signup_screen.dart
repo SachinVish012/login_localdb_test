@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:login_localdb_test/view_screen/signup_screen/signup_widget/name_widget.dart';
+import 'package:login_localdb_test/view_screen/signup_screen/signup_widget/signup_email_widget.dart';
+import 'package:login_localdb_test/view_screen/signup_screen/signup_widget/signup_mobile_widget.dart';
+import 'package:login_localdb_test/view_screen/signup_screen/signup_widget/signup_password_widget.dart';
 
 import '../../view_model/signup_view_models/signup_view_models.dart';
 
@@ -35,58 +39,28 @@ class _SignupScreenViewState extends State<SignupScreenView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                TextFormField(
-                  controller: _signupController.nameController,
-                  decoration: InputDecoration(labelText: 'Name'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your name';
-                    }
-                    return null;
-                  },
+                //---widget for name
+                SignupNameWidget(signupController: _signupController),
+                //---widget for email
+                SinupEmailWidget(signupController: _signupController),
+                //-----widget for mobile number
+                SignupMobileWidget(signupController: _signupController),
+                //---widget for password
+                SignupPasswordWodget(signupController: _signupController),
+                const SizedBox(
+                  height: 20,
                 ),
-                TextFormField(
-                  controller: _signupController.emailController,
-                  decoration: InputDecoration(labelText: 'Email'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _signupController.passwordController,
-                  decoration: InputDecoration(labelText: 'Password'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a password';
-                    }
-                    return null;
-                  },
-                  obscureText: true,
-                ),
-                TextFormField(
-                  controller: _signupController.phoneController,
-                  decoration: InputDecoration(labelText: 'Phone Number'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your phone number';
-                    }
-                    return null;
-                  },
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                Center(
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _signupController.signUp();
-                      }
-                    },
-                    child: Text('Sign Up'),
-                  ),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _signupController.signUp();
+                        }
+                      },
+                      child: Text('Sign Up'),
+                    ),
                 ),
+
               ],
             ),
           ),

@@ -32,7 +32,7 @@ class _UserDetailsViewState extends State<UserDetailsView> {
         title: Text('User Details'),
         actions: [
           Container(
-            margin: EdgeInsets.only(right: 20),
+            margin: EdgeInsets.only(right: 4),
               child: IconButton(
                 icon: Icon(Icons.edit),
                 color: Colors.blue,
@@ -40,7 +40,18 @@ class _UserDetailsViewState extends State<UserDetailsView> {
                   Get.toNamed(RoutesName.user_dataEdit,arguments:email);
                 },
               )
-          )],
+          ),
+          Container(
+              margin: EdgeInsets.only(right: 20),
+              child: IconButton(
+                icon: Icon(Icons.logout_outlined),
+                color: Colors.blue,
+                onPressed: (){
+                  Get.offAllNamed(RoutesName.login_screen);
+                },
+              )
+          ),
+        ],
       ),
       body: Center(
         child: Container(

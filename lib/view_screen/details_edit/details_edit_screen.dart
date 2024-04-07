@@ -4,9 +4,12 @@ import 'package:get/get.dart';
 import '../../database/database.dart';
 import '../../model/user_model.dart';
 import '../../view_model/edit_details_view_models/edit_view_model.dart';
+import 'edit_details_widget/edit_email_widget.dart';
+import 'edit_details_widget/edit_name_widget.dart';
+import 'edit_details_widget/edit_password_widget.dart';
 
 class EditUserDetails extends StatefulWidget {
-  const EditUserDetails({super.key});
+  const EditUserDetails({Key? key}) : super(key: key);
 
   @override
   State<EditUserDetails> createState() => _EditUserDetailsState();
@@ -15,8 +18,10 @@ class EditUserDetails extends StatefulWidget {
 class _EditUserDetailsState extends State<EditUserDetails> {
   late Future<User?> _userFuture;
   final dbHelper = DatabaseHelper();
+  late final String email;
+  final _formKey = GlobalKey<FormState>();
+//---------for instance of EditViewDetailsModel
   final controller = Get.put(EditViewDetailsModel());
-  late final email;
 
   @override
   void initState() {
@@ -43,33 +48,32 @@ class _EditUserDetailsState extends State<EditUserDetails> {
             controller.nameController.text = snapshot.data!.name!;
             controller.emailController.text = snapshot.data!.email!;
             controller.passwordController.text = snapshot.data!.password!;
-            controller.phoneController.text=snapshot.data!.phoneNumber!;
-            return Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  TextField(
-                    controller: controller.nameController,
-                    decoration: InputDecoration(labelText: 'Name'),
-                  ),
-                  TextField(
-                    controller: controller.emailController,
-                    decoration: InputDecoration(labelText: 'Email'),
-                  ),
-                  TextField(
-                    controller: controller.passwordController,
-                    decoration: InputDecoration(labelText: 'Password'),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      controller.updateUserDetails();
-                    },
-                    child: Text('Update'),
-                  ),
-                ],
+            controller.phoneController.text = snapshot.data!.phoneNumber!;
+            return Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    //---for name
+                    EditNameWidget(controller: controller,),
+                    //---for email
+                    EditEmailWidget(controller: controller,),
+                    //----for password
+                    EditPasswordWidget(controller: controller,),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          controller.updateUserDetails();
+                        }
+                      },
+                      child: Text('Update'),
+                    ),
+                  ],
+                ),
               ),
             );
           }

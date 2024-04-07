@@ -14,7 +14,7 @@ class LoginController extends GetxController {
     isLoading.value = true;
     final emailText = email.text;
     final passwordText = password.text;
-
+print(emailText+"--"+passwordText);
     bool loggedIn = await DatabaseHelper().loginUser(emailText, passwordText);
 
     if (loggedIn) {
